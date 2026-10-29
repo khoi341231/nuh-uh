@@ -1,0 +1,671 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Thư viện tài liệu pháp lý về tổ chức chính quyền địa phương tỉnh Điện Biên">
+  <title>Thư viện tài liệu pháp lý | Điện Biên</title>
+
+  <style>
+    :root {
+      --primary: #174b80;
+      --primary-dark: #10365e;
+      --accent: #d9a441;
+      --bg: #f3f6fa;
+      --text: #243247;
+      --muted: #68778b;
+      --border: #e0e7ef;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #10365e, #2166a5);
+      color: white;
+      padding: 44px 20px 58px;
+      border-bottom: 5px solid var(--accent);
+    }
+
+    .hero-inner {
+      max-width: 1080px;
+      margin: auto;
+    }
+
+    .eyebrow {
+      color: #f5d58b;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(27px, 4vw, 39px);
+      line-height: 1.25;
+      margin: 13px 0;
+      max-width: 800px;
+    }
+
+    .hero p {
+      color: #e1ebf7;
+      max-width: 720px;
+      margin-bottom: 0;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: -25px auto 0;
+      padding: 0 20px 45px;
+      position: relative;
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 17px 20px;
+      box-shadow: 0 5px 18px #183a5c0a;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 25px;
+      color: var(--primary);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 220px;
+      padding: 13px 16px;
+      border: 1px solid #ccd7e4;
+      border-radius: 9px;
+      background: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px #174b8017;
+    }
+
+    .filter {
+      padding: 12px 14px;
+      border: 1px solid #ccd7e4;
+      border-radius: 9px;
+      background: white;
+      color: var(--text);
+      font-size: 14px;
+      max-width: 100%;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 30px 0 15px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: 21px;
+      color: var(--primary-dark);
+    }
+
+    .result-count {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .documents {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .document {
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 21px;
+      min-width: 0;
+      transition: transform .18s, box-shadow .18s;
+    }
+
+    .document:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px #173b5e12;
+    }
+
+    .doc-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+    }
+
+    .doc-icon {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      width: 43px;
+      height: 43px;
+      border-radius: 10px;
+      background: #eaf1fa;
+      font-size: 22px;
+    }
+
+    .doc-number {
+      font-size: 11px;
+      font-weight: 800;
+      color: #6b7b90;
+      letter-spacing: 1px;
+    }
+
+    .document h3 {
+      margin: 3px 0 10px;
+      color: #203d60;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .tag {
+      display: inline-block;
+      width: fit-content;
+      background: #edf3fa;
+      color: #285582;
+      padding: 4px 9px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 18px;
+      flex: 1;
+    }
+
+    .doc-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid #edf0f5;
+      padding-top: 15px;
+    }
+
+    .open-link {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 13px;
+      border-radius: 7px;
+      background: var(--primary);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background .15s;
+    }
+
+    .open-link:hover {
+      background: var(--primary-dark);
+    }
+
+    .copy-link {
+      border: 0;
+      background: transparent;
+      color: #52657d;
+      font-size: 12px;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+
+    .copy-link:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 35px;
+      background: white;
+      border-radius: 12px;
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 28px;
+      background: #fffaf0;
+      border: 1px solid #f0dfb7;
+      border-radius: 10px;
+      padding: 15px 18px;
+      font-size: 13px;
+      color: #6b5730;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 22px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 650px) {
+      .hero {
+        padding: 34px 18px 48px;
+      }
+
+      .container {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .overview {
+        grid-template-columns: 1fr;
+        gap: 9px;
+      }
+
+      .stat {
+        padding: 12px 16px;
+      }
+
+      .stat strong {
+        font-size: 21px;
+      }
+
+      .documents {
+        grid-template-columns: 1fr;
+      }
+
+      .filter {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Thư viện tài liệu tham khảo</div>
+      <h1>Tổ chức chính quyền địa phương tỉnh Điện Biên</h1>
+      <p>
+        Tổng hợp văn bản pháp luật, nghị quyết và nguồn thông tin chính thức
+        phục vụ nghiên cứu về tổ chức bộ máy hành chính và chính quyền địa phương.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="overview" aria-label="Tổng quan thư viện">
+      <div class="stat">
+        <strong>07</strong>
+        <span>Tài liệu và nguồn tham khảo</span>
+      </div>
+      <div class="stat">
+        <strong>04</strong>
+        <span>Văn bản và bài viết chuyên đề</span>
+      </div>
+      <div class="stat">
+        <strong>03</strong>
+        <span>Cổng thông tin chính thức</span>
+      </div>
+    </section>
+
+    <div class="section-heading">
+      <h2>Danh mục tài liệu</h2>
+      <span class="result-count" id="resultCount">7 tài liệu</span>
+    </div>
+
+    <div class="toolbar">
+      <input
+        class="search"
+        type="search"
+        id="searchInput"
+        placeholder="Tìm theo tên văn bản, số hiệu, nội dung..."
+        aria-label="Tìm kiếm tài liệu"
+      >
+
+      <select class="filter" id="categoryFilter" aria-label="Lọc loại tài liệu">
+        <option value="all">Tất cả tài liệu</option>
+        <option value="vanban">Văn bản, bài viết pháp lý</option>
+        <option value="congthongtin">Cổng thông tin chính thức</option>
+      </select>
+    </div>
+
+    <section class="documents" id="documentList">
+
+      <article class="document" data-category="vanban"
+        data-search="thành lập cơ quan chuyên môn ubnd tỉnh điện biên bộ máy hành chính">
+        <div class="doc-top">
+          <div class="doc-icon">🏛️</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 01</div>
+            <h3>Thành lập các cơ quan chuyên môn thuộc UBND tỉnh Điện Biên</h3>
+          </div>
+        </div>
+        <span class="tag">Tổ chức bộ máy</span>
+        <p class="description">
+          Bài viết về việc thành lập các cơ quan chuyên môn thuộc
+          Ủy ban nhân dân tỉnh Điện Biên.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://xaydungchinhsach.chinhphu.vn/thanh-lap-cac-co-quan-chuyen-mon-thuoc-ubnd-tinh-dien-bien-119250220170303279.htm"
+            target="_blank" rel="noopener noreferrer">
+            Đọc tài liệu ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://xaydungchinhsach.chinhphu.vn/thanh-lap-cac-co-quan-chuyen-mon-thuoc-ubnd-tinh-dien-bien-119250220170303279.htm">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+      <article class="document" data-category="vanban"
+        data-search="sơ kết 1 năm sắp xếp đơn vị hành chính các cấp hoạt động chính quyền địa phương 2 cấp điện biên">
+        <div class="doc-top">
+          <div class="doc-icon">📊</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 02</div>
+            <h3>Sơ kết 1 năm sắp xếp đơn vị hành chính và hoạt động chính quyền địa phương 2 cấp tỉnh Điện Biên</h3>
+          </div>
+        </div>
+        <span class="tag">Cải cách hành chính</span>
+        <p class="description">
+          Nguồn tham khảo về việc sắp xếp đơn vị hành chính và tổ chức,
+          vận hành chính quyền địa phương hai cấp.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://luatvietnam.vn/hanh-chinh/so-do-to-chuc-chinh-quyen-2-cap-570-101770-article.html"
+            target="_blank" rel="noopener noreferrer">
+            Đọc tài liệu ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://luatvietnam.vn/hanh-chinh/so-do-to-chuc-chinh-quyen-2-cap-570-101770-article.html">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+      <article class="document" data-category="vanban"
+        data-search="nghị định 24/2014/nđ-cp tổ chức cơ quan chuyên môn thuộc ubnd tỉnh thành phố trực thuộc trung ương">
+        <div class="doc-top">
+          <div class="doc-icon">⚖️</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 03</div>
+            <h3>Nghị định số 24/2014/NĐ-CP</h3>
+          </div>
+        </div>
+        <span class="tag">Nghị định Chính phủ</span>
+        <p class="description">
+          Quy định về tổ chức các cơ quan chuyên môn thuộc UBND tỉnh,
+          thành phố trực thuộc Trung ương.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://thuvienphapluat.vn/van-ban/Bo-may-hanh-chinh/Nghi-dinh-24-2014-ND-CP-to-chuc-co-quan-chuyen-mon-thuoc-UBND-tinh-TP-truc-thuoc-Trung-uong-225599.aspx"
+            target="_blank" rel="noopener noreferrer">
+            Đọc văn bản ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://thuvienphapluat.vn/van-ban/Bo-may-hanh-chinh/Nghi-dinh-24-2014-ND-CP-to-chuc-co-quan-chuyen-mon-thuoc-UBND-tinh-TP-truc-thuoc-Trung-uong-225599.aspx">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+      <article class="document" data-category="vanban"
+        data-search="nghị định 107/2020/nđ-cp sửa đổi nghị định 24/2014 tổ chức cơ quan chuyên môn">
+        <div class="doc-top">
+          <div class="doc-icon">📜</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 04</div>
+            <h3>Nghị định số 107/2020/NĐ-CP</h3>
+          </div>
+        </div>
+        <span class="tag">Nghị định Chính phủ</span>
+        <p class="description">
+          Văn bản sửa đổi, bổ sung một số điều của Nghị định số
+          24/2014/NĐ-CP về cơ quan chuyên môn thuộc UBND cấp tỉnh.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=200998"
+            target="_blank" rel="noopener noreferrer">
+            Đọc văn bản ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://vanban.chinhphu.vn/default.aspx?pageid=27160&docid=200998">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+      <article class="document" data-category="vanban"
+        data-search="luật tổ chức chính quyền địa phương 72/2025/qh15 quốc hội">
+        <div class="doc-top">
+          <div class="doc-icon">📘</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 05</div>
+            <h3>Luật Tổ chức chính quyền địa phương số 72/2025/QH15</h3>
+          </div>
+        </div>
+        <span class="tag">Luật của Quốc hội</span>
+        <p class="description">
+          Văn bản pháp luật về tổ chức và hoạt động của chính quyền
+          địa phương, làm cơ sở nghiên cứu mô hình chính quyền hai cấp.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://xaydungchinhsach.chinhphu.vn/toan-van-luat-so-72-2025-qh15-to-chuc-chinh-quyen-dia-phuong-119250618161434371.htm"
+            target="_blank" rel="noopener noreferrer">
+            Đọc toàn văn ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://xaydungchinhsach.chinhphu.vn/toan-van-luat-so-72-2025-qh15-to-chuc-chinh-quyen-dia-phuong-119250618161434371.htm">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+      <article class="document" data-category="congthongtin"
+        data-search="sở nội vụ tỉnh điện biên cơ cấu tổ chức nhiệm vụ cải cách hành chính">
+        <div class="doc-top">
+          <div class="doc-icon">🏢</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 06</div>
+            <h3>Cổng thông tin điện tử Sở Nội vụ tỉnh Điện Biên</h3>
+          </div>
+        </div>
+        <span class="tag">Cơ quan chuyên môn</span>
+        <p class="description">
+          Nguồn thông tin về lĩnh vực nội vụ, tổ chức bộ máy,
+          công chức, viên chức và cải cách hành chính của tỉnh.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://snv.dienbien.gov.vn/"
+            target="_blank" rel="noopener noreferrer">
+            Truy cập cổng ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://snv.dienbien.gov.vn/">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+      <article class="document" data-category="congthongtin"
+        data-search="cổng thông tin điện tử tỉnh điện biên thông tin chính thức văn bản điều hành">
+        <div class="doc-top">
+          <div class="doc-icon">🌐</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 07</div>
+            <h3>Cổng thông tin điện tử tỉnh Điện Biên</h3>
+          </div>
+        </div>
+        <span class="tag">Nguồn thông tin chính thức</span>
+        <p class="description">
+          Tra cứu thông tin chỉ đạo, điều hành, tin tức địa phương
+          và các nội dung liên quan đến hoạt động của tỉnh.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://dienbien.gov.vn/"
+            target="_blank" rel="noopener noreferrer">
+            Truy cập cổng ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://dienbien.gov.vn/">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+      <article class="document" data-category="vanban"
+        data-search="nghị quyết 224/NQ-HĐND ngày 20/2/2025 hội đồng nhân dân tỉnh điện biên thành lập cơ quan chuyên môn">
+        <div class="doc-top">
+          <div class="doc-icon">📝</div>
+          <div>
+            <div class="doc-number">TÀI LIỆU 08</div>
+            <h3>Nghị quyết số 224/NQ-HĐND ngày 20/02/2025 của HĐND tỉnh Điện Biên</h3>
+          </div>
+        </div>
+        <span class="tag">Nghị quyết HĐND tỉnh</span>
+        <p class="description">
+          Nguồn tra cứu nghị quyết liên quan đến việc thành lập
+          các cơ quan chuyên môn thuộc UBND tỉnh Điện Biên.
+        </p>
+        <div class="doc-actions">
+          <a class="open-link"
+            href="https://thuviennhadat.vn/van-ban-phap-luat-viet-nam/nghi-quyet-224-nq-hdnd-2025-thanh-lap-cac-co-quan-chuyen-mon-thuoc-uy-ban-tinh-dien-bien-647297.html"
+            target="_blank" rel="noopener noreferrer">
+            Đọc nghị quyết ↗
+          </a>
+          <button class="copy-link" type="button"
+            data-url="https://thuviennhadat.vn/van-ban-phap-luat-viet-nam/nghi-quyet-224-nq-hdnd-2025-thanh-lap-cac-co-quan-chuyen-mon-thuoc-uy-ban-tinh-dien-bien-647297.html">
+            Sao chép liên kết
+          </button>
+        </div>
+      </article>
+
+    </section>
+
+    <div class="empty" id="emptyMessage">
+      Không tìm thấy tài liệu phù hợp. Hãy thử từ khóa khác.
+    </div>
+
+    <aside class="notice">
+      <strong>Lưu ý khi sử dụng:</strong>
+      Các liên kết dẫn đến nguồn bên ngoài. Khi trích dẫn trong báo cáo
+      hoặc nghiên cứu, nên kiểm tra toàn văn, tình trạng hiệu lực,
+      văn bản sửa đổi và nguồn công bố chính thức của từng văn bản.
+    </aside>
+  </main>
+
+  <footer>
+    THƯ VIỆN TÀI LIỆU THAM KHẢO · TỈNH ĐIỆN BIÊN
+    <br>
+    Giao diện tra cứu độc lập · HTML, CSS và JavaScript
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const documents = [...document.querySelectorAll(".document")];
+    const resultCount = document.getElementById("resultCount");
+    const emptyMessage = document.getElementById("emptyMessage");
+
+    function filterDocuments() {
+      const keyword = searchInput.value
+        .trim()
+        .toLocaleLowerCase("vi");
+      const category = categoryFilter.value;
+      let visible = 0;
+
+      documents.forEach((doc) => {
+        const content = (
+          doc.innerText + " " + doc.dataset.search
+        ).toLocaleLowerCase("vi");
+
+        const matchesKeyword = content.includes(keyword);
+        const matchesCategory =
+          category === "all" || doc.dataset.category === category;
+        const show = matchesKeyword && matchesCategory;
+
+        doc.style.display = show ? "flex" : "none";
+        if (show) visible++;
+      });
+
+      resultCount.textContent = visible + " tài liệu";
+      emptyMessage.style.display = visible ? "none" : "block";
+    }
+
+    searchInput.addEventListener("input", filterDocuments);
+    categoryFilter.addEventListener("change", filterDocuments);
+
+    document.querySelectorAll(".copy-link").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const url = button.dataset.url;
+
+        try {
+          await navigator.clipboard.writeText(url);
+          button.textContent = "Đã sao chép!";
+          setTimeout(() => {
+            button.textContent = "Sao chép liên kết";
+          }, 1800);
+        } catch {
+          window.prompt("Sao chép liên kết bên dưới:", url);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
